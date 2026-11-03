@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta name="theme-color" content="#f5f6f8">
+  <title>Seat Booking</title>
+  <link rel="stylesheet" href="styles.css">
+  <script type="module" src="js/app.js"></script>
+</head>
+<body>
+  <div class="page-shell">
+    <header class="site-header">
+      <a class="brand" href="#" aria-label="SeatSelect home">
+        <span class="brand-mark" aria-hidden="true">S</span>
+        <span>seat<span class="brand-accent">select</span></span>
+      </a>
+      <span class="secure-label"><span class="secure-dot" aria-hidden="true"></span>Secure booking</span>
+    </header>
+
+    <main>
+      <header class="event-heading">
+        <p class="eyebrow">Live event · Seat selection</p>
+        <h1 id="event-name">Seat Booking</h1>
+        <p class="event-subtitle">Choose your seats and make the evening yours.</p>
+        <div class="progress" aria-label="Booking progress">
+          <span class="progress-step active"><span class="progress-number">1</span>Seats</span>
+          <span class="progress-line" aria-hidden="true"></span>
+          <span class="progress-step"><span class="progress-number">2</span>Details</span>
+          <span class="progress-line" aria-hidden="true"></span>
+          <span class="progress-step"><span class="progress-number">3</span>Confirmation</span>
+        </div>
+      </header>
+
+      <p id="loading" role="status">Loading event…</p>
+      <div id="error" role="alert" hidden>
+        <p>Could not load the event. Please try again.</p>
+        <button type="button" id="retry">Retry</button>
+      </div>
+
+      <div id="booking" class="booking-layout" hidden>
+        <section class="seat-panel" aria-labelledby="seats-h">
+          <div class="panel-heading">
+            <div>
+              <p class="eyebrow">Find your view</p>
+              <h2 id="seats-h">Choose your seats</h2>
+            </div>
+          </div>
+          <p class="hint">Choose up to 6 seats. Use the arrow keys to move between seats, Space or Enter to select.</p>
+          <ul class="legend" aria-label="Legend">
+            <li><span class="swatch" data-state="available"></span> Available</li>
+            <li><span class="swatch" data-state="selected">✓</span> Selected</li>
+            <li><span class="swatch" data-state="sold">✕</span> Sold</li>
+          </ul>
+          <div class="map-scroll" tabindex="-1">
+            <div class="stage" aria-hidden="true">STAGE</div>
+            <div id="map" class="map"></div>
+            <p class="map-caption">All seats face the stage</p>
+          </div>
+        </section>
+
+        <aside>
+          <section aria-labelledby="summary-h" class="summary">
+            <p class="eyebrow">Almost there</p>
+            <h2 id="summary-h">Your selection</h2>
+            <ul id="selected-list"></ul>
+            <p id="total"></p>
+            <div id="problems" role="alert" tabindex="-1"></div>
+            <button type="button" id="continue">Continue to details</button>
+            <p class="checkout-note">Your seats are confirmed after booking.</p>
+          </section>
+        </aside>
+        <p id="confirmation" class="confirmation" hidden></p>
+      </div>
+      <div id="live" class="sr-only" aria-live="polite"></div>
+    </main>
+  </div>
+
+  <dialog id="dialog" aria-labelledby="dialog-h">
+    <form id="form" method="dialog" novalidate>
+      <h2 id="dialog-h">Your details</h2>
+      <div id="form-errors" role="alert" tabindex="-1"></div>
+      <label for="name">Name</label>
+      <input id="name" name="name" autocomplete="name" required>
+      <label for="email">Email</label>
+      <input id="email" name="email" type="email" autocomplete="email" required>
+      <div class="actions">
+        <button type="button" id="cancel" class="secondary">Cancel</button>
+        <button type="submit" id="book">Book</button>
+      </div>
+    </form>
+  </dialog>
+</body>
+</html>

@@ -1,0 +1,6 @@
+# Notes
+- **Structure:** `js/seats.js` is pure logic (rules, prices, formatting) with no DOM; `js/app.js` handles fetch, rendering, keyboard and dialog; `seats.test.js` tests the logic with `node:assert` (`node seats.test.js`). `package.json` only sets `"type": "module"` so Node loads ES modules; there are no dependencies.
+- **Accessibility by design:** seats are real `<button>`s with full `aria-label`s and `aria-pressed`; states differ by mark (✓ / ✕), border style and hatch pattern, not just colour; sold seats use `aria-disabled` so they stay readable; native `<dialog>` handles focus trapping and Escape; errors are in `role="alert"` lists; roving tabindex with arrows/Home/End.
+- **Security:** event name is set with `textContent`, so the `<img onerror>` payload in `event.json` is shown as text.
+- **Checks run:** unit tests (all required cases pass). Keyboard-only walkthrough, screen reader (NVDA/VoiceOver) and axe/Lighthouse: _record your results here after running them._
+- **Improve with more time:** per-row `role="group"`, nicer error messages linked per field via `aria-describedby`, a seat-selection limit hint, e2e tests (Playwright), and a currency locale taken from the event data.

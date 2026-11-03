@@ -1,0 +1,1 @@
+{ "name": "seat-booking", "private": true, "type": "module", "scripts": { "test": "node seats.test.js" } }

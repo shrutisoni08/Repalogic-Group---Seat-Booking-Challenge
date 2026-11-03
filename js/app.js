@@ -4,6 +4,7 @@ const $ = (id) => document.getElementById(id);
 const state = { event: null, sold: new Set(), selected: new Set(), active: null };
 const buttons = new Map();
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+let confirmationTimeout;
 
 const seatState = (id) => (state.sold.has(id) ? "sold" : state.selected.has(id) ? "selected" : "available");
 
@@ -23,6 +24,12 @@ function renderProblems(box, problems) {
     ul.append(li);
   }
   box.append(ul);
+}
+
+function resetDialog() {
+  $("dialog-h").textContent = "Your details";
+  $("details-fields").hidden = false;
+  $("dialog-confirmation").hidden = true;
 }
 
 async function load() {
@@ -157,6 +164,7 @@ $("continue").addEventListener("click", () => {
   if (problems.length) return;
   $("name").value = "";
   $("email").value = "";
+  resetDialog();
   renderProblems($("form-errors"), []);
   [$("name"), $("email")].forEach((f) => f.removeAttribute("aria-invalid"));
   $("dialog").showModal();
@@ -177,15 +185,22 @@ $("form").addEventListener("submit", (e) => {
   state.selected.clear();
   booked.forEach(updateSeat);
   renderSummary();
-  $("dialog").close();
-  $("confirmation").hidden = false;
-  $("confirmation").textContent = "Booking confirmed";
-  announce("Booking confirmed");
+  $("dialog-h").textContent = "Booking confirmed";
+  $("details-fields").hidden = true;
+  $("dialog-confirmation").hidden = false;
+  $("dialog-h").focus();
+  confirmationTimeout = setTimeout(() => {
+    if ($("dialog").open) $("dialog").close();
+  }, 5000);
+ announce("Booking confirmed");
 });
 
 $("cancel").addEventListener("click", () => $("dialog").close());
-// Fires for Escape, Cancel and successful Book: focus always returns to Continue.
-$("dialog").addEventListener("close", () => $("continue").focus());
+$("dialog").addEventListener("close", () => {
+  clearTimeout(confirmationTimeout);
+  resetDialog();
+  $("continue").focus();
+});
 $("retry").addEventListener("click", load);
 
 load();

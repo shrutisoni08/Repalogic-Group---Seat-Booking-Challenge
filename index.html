@@ -71,7 +71,6 @@
             <p class="checkout-note">Your seats are confirmed after booking.</p>
           </section>
         </aside>
-        <p id="confirmation" class="confirmation" hidden></p>
       </div>
       <div id="live" class="sr-only" aria-live="polite"></div>
     </main>
@@ -79,16 +78,19 @@
 
   <dialog id="dialog" aria-labelledby="dialog-h">
     <form id="form" method="dialog" novalidate>
-      <h2 id="dialog-h">Your details</h2>
-      <div id="form-errors" role="alert" tabindex="-1"></div>
-      <label for="name">Name</label>
-      <input id="name" name="name" autocomplete="name" required>
-      <label for="email">Email</label>
-      <input id="email" name="email" type="email" autocomplete="email" required>
-      <div class="actions">
-        <button type="button" id="cancel" class="secondary">Cancel</button>
-        <button type="submit" id="book">Book</button>
+      <h2 id="dialog-h" tabindex="-1">Your details</h2>
+      <div id="details-fields">
+        <div id="form-errors" role="alert" tabindex="-1"></div>
+        <label for="name">Name</label>
+        <input id="name" name="name" autocomplete="name" required>
+        <label for="email">Email</label>
+        <input id="email" name="email" type="email" autocomplete="email" required>
+        <div class="actions">
+          <button type="button" id="cancel" class="secondary">Cancel</button>
+          <button type="submit" id="book">Book</button>
+        </div>
       </div>
+      <p id="dialog-confirmation" class="dialog-confirmation" hidden>Booking confirmed. This window will close in 5 seconds.</p>
     </form>
   </dialog>
 </body>

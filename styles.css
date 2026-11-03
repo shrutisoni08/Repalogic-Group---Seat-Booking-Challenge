@@ -343,17 +343,6 @@ button.secondary:hover { border-color: #cbd3df; background: var(--surface-soft);
 }
 #problems ul, #form-errors ul { margin: 0; padding-left: 1.2rem; }
 
-.confirmation {
-  grid-column: 1 / -1;
-  margin: 0;
-  padding: .9rem 1rem;
-  border: 1px solid #b7e5d2;
-  border-radius: .7rem;
-  background: #edfaf4;
-  color: #176b48;
-  font-weight: 750;
-}
-
 :focus-visible { outline: 3px solid #f2a28b; outline-offset: 3px; }
 
 dialog {
@@ -368,6 +357,15 @@ dialog {
 
 dialog::backdrop { background: rgb(18 29 47 / 52%); backdrop-filter: blur(3px); }
 dialog h2 { margin-bottom: 1.2rem; }
+.dialog-confirmation {
+  margin: 0;
+  padding: 1rem;
+  border: 1px solid #b7e5d2;
+  border-radius: .7rem;
+  background: #edfaf4;
+  color: #176b48;
+  font-weight: 700;
+}
 label { display: block; margin: .9rem 0 .35rem; font-size: .82rem; font-weight: 700; }
 input {
   width: 100%;

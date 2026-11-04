@@ -1,6 +1,8 @@
 import { SEATS_PER_ROW, parseSeat, categoryOf, seatPrice, sortSeats, formatCents, calculateTotal, validateSelection } from "./seats.js";
 
 const $ = (id) => document.getElementById(id);
+// This is the app's single source of truth: the event definition, all sold seats,
+// and the seats the user has currently chosen.
 const state = { event: null, sold: new Set(), selected: new Set(), active: null };
 const buttons = new Map();
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -56,6 +58,8 @@ async function load() {
   }
 }
 
+// Build the seat grid from the event data. Every button represents one seat and is
+// tracked in a Map so our keyboard navigation and selection logic can act on the exact DOM element.
 function buildMap() {
   const map = $("map");
   map.replaceChildren();
@@ -106,6 +110,8 @@ function focusSeat(id) {
   b.focus();
 }
 
+// Toggle a seat on or off while keeping the sold seats immutable. The summary and
+// validation UI re-render immediately, so the user sees the current price and warnings right away.
 function toggleSeat(id) {
   if (state.sold.has(id)) return;
   state.selected.has(id) ? state.selected.delete(id) : state.selected.add(id);
@@ -170,6 +176,8 @@ $("continue").addEventListener("click", () => {
   $("dialog").showModal();
 });
 
+// A submitted booking is only accepted when the name and email pass validation. Once the
+// form is valid, the chosen seats are marked sold and the user sees a confirmation message.
 $("form").addEventListener("submit", (e) => {
   e.preventDefault();
   const name = $("name"), email = $("email"), problems = [], invalid = [];

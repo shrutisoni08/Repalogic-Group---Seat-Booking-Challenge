@@ -1,8 +1,11 @@
-// Pure seat & price logic. No DOM access. Prices are integer cents.
+// Pure seat & price logic. No DOM access. Prices are stored in cents to keep currency math exact
+// and avoid floating- point rounding issues when totals are calculated.
 export const MAX_SEATS = 6;
 export const SEATS_PER_ROW = 10;
 export const DISCOUNT_FROM = 4;
 
+// Seat IDs use the pattern "RowNumber" (for example A1, B12). The row letter identifies the
+// category, while the number is the seat index within that row.
 export const parseSeat = (id) => {
   const m = /^([A-Z])(\d+)$/.exec(id);
   return m ? { row: m[1], num: Number(m[2]) } : null;
@@ -28,8 +31,8 @@ export function calculateTotal(event, ids) {
   return { subtotal, discount, total: subtotal - discount };
 }
 
-// Free seats that would be left alone: next to a selected seat, with
-// the seat beyond it sold, selected, or past the end of the row.
+// A stranded seat is an empty seat that would be left isolated next to a chosen seat. We prevent
+// this when validating the selection so people cannot pick a seat that would be awkwardly left alone.
 export function findStrandedSeats(event, selected, sold = event.sold) {
   const sel = new Set(selected), soldSet = new Set(sold);
   const blocked = (row, n) => n < 1 || n > SEATS_PER_ROW || sel.has(row + n) || soldSet.has(row + n);

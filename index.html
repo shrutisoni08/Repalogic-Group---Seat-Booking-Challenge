@@ -20,6 +20,8 @@
     </header>
 
     <main>
+      <!-- The booking flow is intentionally split into a seat-selection stage, a summary panel,
+           and a confirmation dialog so the user can follow a clear progression. -->
       <header class="event-heading">
         <p class="eyebrow">Live event · Seat selection</p>
         <h1 id="event-name">Seat Booking</h1>
@@ -76,6 +78,7 @@
     </main>
   </div>
 
+  <!-- Customer details live in a modal so the main seat map remains visible while the user completes checkout. -->
   <dialog id="dialog" aria-labelledby="dialog-h">
     <form id="form" method="dialog" novalidate>
       <h2 id="dialog-h" tabindex="-1">Your details</h2>
